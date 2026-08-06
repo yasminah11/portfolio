@@ -27,22 +27,39 @@ function buildFallbackCells() {
 /**
  * Parse GitHub's contribution HTML.
  * GitHub serves data-level="0..4" on each <td> in the calendar table.
+ * data-count gives the real count per day — we sum these for the total.
  */
 function parseContributionHTML(html) {
   try {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
 
-    // Extract total from the heading text
-    const heading = doc.querySelector("h2");
-    const totalMatch = heading?.textContent?.match(/(\d+)\s+contributions/);
-    const total = totalMatch ? parseInt(totalMatch[1], 10) : null;
-
     // Extract per-day levels from <td data-level="N">
     const tds = doc.querySelectorAll("td[data-level]");
     const levels = Array.from(tds).map((td) => parseInt(td.getAttribute("data-level") || "0", 10));
 
-    return { levels, total };
+    // حساب الـ total من data-count لو موجود، لو لأ نجمع الـ levels
+    let total = 0;
+    tds.forEach((td) => {
+      const count = td.getAttribute("data-count");
+      if (count !== null) {
+        total += parseInt(count, 10);
+      }
+    });
+
+    // لو مفيش data-count، اقرأ من الـ heading كـ fallback
+    if (total === 0) {
+      const headings = doc.querySelectorAll("h2, .f4, .text-normal");
+      for (const el of headings) {
+        const match = el.textContent?.match(/(\d[\d,]*)\s+contributions/);
+        if (match) {
+          total = parseInt(match[1].replace(/,/g, ""), 10);
+          break;
+        }
+      }
+    }
+
+    return { levels, total: total > 0 ? total : null };
   } catch {
     return { levels: [], total: null };
   }
@@ -115,7 +132,7 @@ export function Activity() {
         }
       }
 
-      // All proxies failed — keep fallback but show a real count if we know it
+      // All proxies failed — keep fallback
       setStatus("fallback");
     }
 
