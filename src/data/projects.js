@@ -15,7 +15,7 @@ export const projects = [
     title: "Kabsoula Sharia",
     tagline:
       "Live educational platform with responsive interfaces and dynamic content integration.",
-    year: "2025",
+    year: "2026",
     role: "Frontend Developer",
     cover: p1_1,
     gallery: [p1_1, p1_2, p1_3],
@@ -113,7 +113,7 @@ export const projects = [
     title: "Grad Guide Helper",
     tagline:
       "Interactive academic planning tool for FCAI students to visualize course dependencies and plan their journey.",
-    year: "2025",
+    year: "2026",
     role: "Frontend Developer",
     cover: p3_1,
     gallery: [p3_1, p3_2, p3_3],
