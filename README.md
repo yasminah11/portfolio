@@ -1,29 +1,42 @@
-# Welcome to your Lovable project
+# Yasmin Ahmed Mohamed — Portfolio
 
-This project was built with [Lovable](https://lovable.dev).
+A personal portfolio built with React, TypeScript, and Tailwind CSS.
 
-## Build with Lovable
+**Live site:** [yasminah11.github.io/portfolio](https://yasminah11.github.io/portfolio) _(update with your actual URL)_
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+---
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## About
 
-## Development
+Front-End Developer based in Beni Suef, Egypt. Specialising in React.js and modern front-end tooling — building responsive, interactive web interfaces with clean, maintainable code.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Currently studying BSc Computer Science & AI at Beni Suef National University (CGPA 3.2/4.0), and freelancing at EYPA startup.
+
+---
+
+## Tech Stack
+
+- **React.js** — component architecture, hooks, state management
+- **TypeScript** — type-safe components
+- **Tailwind CSS** — utility-first styling
+- **Vite** — fast dev server and build tool
+- **HTML5 / CSS3 / JavaScript ES6+**
+
+---
+
+## Getting Started
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+git clone https://github.com/yasminah11/portfolio.git
+cd portfolio
+npm install
 npm run dev
 ```
 
-## Built with
+---
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Contact
+
+- **Email:** yasminhemeda78@gmail.com
+- **GitHub:** [@yasminah11](https://github.com/yasminah11)
+- **LinkedIn:** [in/yasmin-ahmed77](https://www.linkedin.com/in/yasmin-ahmed77)
