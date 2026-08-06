@@ -2,15 +2,13 @@
 
 A personal portfolio built with React, TypeScript, and Tailwind CSS.
 
-**Live site:** [yasminah11.github.io/portfolio](https://yasminah11.github.io/portfolio) _(update with your actual URL)_
-
 ---
 
 ## About
 
 Front-End Developer based in Beni Suef, Egypt. Specialising in React.js and modern front-end tooling — building responsive, interactive web interfaces with clean, maintainable code.
 
-Currently studying BSc Computer Science & AI at Beni Suef National University (CGPA 3.2/4.0), and freelancing at EYPA startup.
+Currently studying BSc Computer Science & AI at Beni Suef National University and freelancing at EYPA startup.
 
 ---
 
