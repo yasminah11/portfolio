@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
 import { getProject, projects } from "@/data/projects";
 import { Gallery } from "@/components/work/Gallery";
@@ -30,6 +31,10 @@ function Block({ eyebrow, title, children }) {
 function CaseStudy() {
   const { project } = Route.useLoaderData();
   const others = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
   return (
     <article className="mx-auto max-w-5xl px-5 pb-32 pt-28 sm:px-8 lg:px-14">
