@@ -11,6 +11,7 @@ export const profile = {
   roles: ["Front-End Developer", "React Developer", "Freelance Developer", "UI Developer"],
   summary:
     "I build responsive, interactive web interfaces that users actually enjoy. Skilled in React.js and modern front-end tooling — with a sharp eye for clean code and cross-browser compatibility.",
+  bio: "I don't just build websites — I build experiences. I'm a Front-End Developer who enjoys turning complex ideas into simple, elegant interfaces. I love crafting responsive layouts, smooth interactions, and maintainable code with React and modern web technologies. Every project is an opportunity to create something useful, fast, and enjoyable to use.",
   socials: [
     { label: "GitHub", href: "https://github.com/yasminah11", handle: "@yasminah11" },
     {
@@ -24,7 +25,6 @@ export const profile = {
     { value: 2, suffix: "+", label: "Years building" },
     { value: 5, suffix: "+", label: "Projects delivered" },
     { value: 60, suffix: "+", label: "ITI training hours" },
-    { value: 3.2, suffix: "/4.0", label: "CGPA at BSNU", decimals: 1 },
   ],
   timeline: [
     {

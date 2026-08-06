@@ -32,11 +32,16 @@ function Timeline({ items }) {
             {item.title}
             {item.org ? <span className="text-muted-foreground"> · {item.org}</span> : null}
           </h3>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{item.copy}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            {item.copy}
+          </p>
           {item.tags && (
             <ul className="mt-3 flex flex-wrap gap-2">
               {item.tags.map((tag) => (
-                <li key={tag} className="rounded-full border border-hairline px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                <li
+                  key={tag}
+                  className="rounded-full border border-hairline px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                >
                   {tag}
                 </li>
               ))}
@@ -52,12 +57,15 @@ export function About() {
   const [tab, setTab] = useState("journey");
 
   return (
-    <section id="about" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-28 sm:px-8 sm:py-36 lg:px-14">
+    <section
+      id="about"
+      className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-28 sm:px-8 sm:py-36 lg:px-14"
+    >
       <SectionHeading
         index="01"
         eyebrow="About"
         title="Building for the web with care, curiosity, and clean code."
-        lede="I'm a Front-End Developer from Beni Suef, Egypt — studying Computer Science at BSNU while shipping real projects for real users. I care about responsive layouts, readable code, and interfaces that just work."
+        lede={profile.bio}
       />
 
       <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -66,13 +74,19 @@ export function About() {
             <p className="display text-4xl accent-text sm:text-5xl">
               <Counter value={stat.value} suffix={stat.suffix} decimals={stat.decimals ?? 0} />
             </p>
-            <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+            <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
+              {stat.label}
+            </p>
           </Reveal>
         ))}
       </div>
 
       <div className="mt-16">
-        <div role="tablist" aria-label="About sections" className="flex flex-wrap gap-1 border-b border-hairline">
+        <div
+          role="tablist"
+          aria-label="About sections"
+          className="flex flex-wrap gap-1 border-b border-hairline"
+        >
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -86,7 +100,10 @@ export function About() {
             >
               {t.label}
               {tab === t.id && (
-                <motion.span layoutId="about-tab" className="absolute inset-x-2 -bottom-px h-px bg-accent" />
+                <motion.span
+                  layoutId="about-tab"
+                  className="absolute inset-x-2 -bottom-px h-px bg-accent"
+                />
               )}
             </button>
           ))}
