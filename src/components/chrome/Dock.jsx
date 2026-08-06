@@ -25,18 +25,39 @@ export function Dock({ onOpenPalette }) {
 
   useEffect(() => {
     if (!onHome) return;
-    const nodes = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { threshold: [0.25, 0.5], rootMargin: "-20% 0px -45% 0px" },
-    );
-    nodes.forEach((n) => observer.observe(n));
-    return () => observer.disconnect();
+
+    const getSectionInView = () => {
+      const scrollY = window.scrollY;
+      const windowH = window.innerHeight;
+
+      // اقرأ كل section وشوف أيها أكتر ظهوراً في الشاشة
+      let bestId = "top";
+      let bestVisibility = 0;
+
+      for (const { id } of SECTIONS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const rect = el.getBoundingClientRect();
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(windowH, rect.bottom);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        const visibility = visibleHeight / windowH;
+
+        if (visibility > bestVisibility) {
+          bestVisibility = visibility;
+          bestId = id;
+        }
+      }
+
+      setActive(bestId);
+    };
+
+    // شغل مرة أول ما يتحمل
+    getSectionInView();
+
+    window.addEventListener("scroll", getSectionInView, { passive: true });
+    return () => window.removeEventListener("scroll", getSectionInView);
   }, [onHome]);
 
   const go = (id) => {
@@ -66,7 +87,13 @@ export function Dock({ onOpenPalette }) {
             isActive ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground",
           );
           return onHome ? (
-            <button key={id} type="button" onClick={() => go(id)} className={cls} aria-current={isActive ? "true" : undefined}>
+            <button
+              key={id}
+              type="button"
+              onClick={() => go(id)}
+              className={cls}
+              aria-current={isActive ? "true" : undefined}
+            >
               {isActive && (
                 <motion.span
                   layoutId="dock-pill"
