@@ -1,7 +1,11 @@
-import atlas from "@/assets/project-atlas.jpg";
-import lumen from "@/assets/project-lumen.jpg";
-import nimbus from "@/assets/project-nimbus.jpg";
-import forge from "@/assets/project-forge.jpg";
+import p1_1 from "@/assets/project1-1.png";
+import p1_2 from "@/assets/project1-2.png";
+import p1_3 from "@/assets/project1-3.png";
+import p2_1 from "@/assets/project2-1.png";
+import p2_2 from "@/assets/project2-2.png";
+import p3_1 from "@/assets/project3-1.png";
+import p3_2 from "@/assets/project3-2.png";
+import p3_3 from "@/assets/project3-3.png";
 
 export const categories = ["All", "React", "JavaScript", "API"];
 
@@ -13,8 +17,8 @@ export const projects = [
       "Live educational platform with responsive interfaces and dynamic content integration.",
     year: "2025",
     role: "Frontend Developer",
-    cover: atlas,
-    gallery: [atlas, lumen, nimbus],
+    cover: p1_1,
+    gallery: [p1_1, p1_2, p1_3],
     categories: ["JavaScript", "API"],
     tech: ["HTML5", "CSS3", "Bootstrap 5", "JavaScript (ES6+)", "REST API", "Git", "GitHub"],
     accentStat: { value: 100, suffix: "%", label: "cross-browser compatible" },
@@ -62,8 +66,8 @@ export const projects = [
       "Interactive biology learning platform with engaging animations and dynamic user experiences.",
     year: "2025",
     role: "Frontend Developer",
-    cover: lumen,
-    gallery: [lumen, atlas, forge],
+    cover: p2_1,
+    gallery: [p2_1, p2_2],
     categories: ["JavaScript"],
     tech: ["HTML5", "CSS3", "JavaScript (ES6+)", "Bootstrap 5", "CSS Animations", "Git", "GitHub"],
     accentStat: { value: 5, suffix: "+", label: "interactive features built" },
@@ -111,8 +115,8 @@ export const projects = [
       "Interactive academic planning tool for FCAI students to visualize course dependencies and plan their journey.",
     year: "2025",
     role: "Frontend Developer",
-    cover: nimbus,
-    gallery: [nimbus, forge, atlas],
+    cover: p3_1,
+    gallery: [p3_1, p3_2, p3_3],
     categories: ["React", "API"],
     tech: [
       "React.js",
