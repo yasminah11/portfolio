@@ -27,54 +27,54 @@ function buildFallbackCells() {
 /**
  * Parse GitHub's contribution HTML.
  * GitHub serves data-level="0..4" on each <td> in the calendar table.
- * data-count gives the real count per day — we sum these for the total.
  */
 function parseContributionHTML(html) {
   try {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
 
+    // Extract total from the heading text
+    const heading = doc.querySelector("h2");
+    const totalMatch = heading?.textContent?.match(/(\d+)\s+contributions/);
+    const total = totalMatch ? parseInt(totalMatch[1], 10) : null;
+
     // Extract per-day levels from <td data-level="N">
     const tds = doc.querySelectorAll("td[data-level]");
     const levels = Array.from(tds).map((td) => parseInt(td.getAttribute("data-level") || "0", 10));
 
-    // حساب الـ total من data-count لو موجود، لو لأ نجمع الـ levels
-    let total = 0;
-    tds.forEach((td) => {
-      const count = td.getAttribute("data-count");
-      if (count !== null) {
-        total += parseInt(count, 10);
-      }
-    });
-
-    // لو مفيش data-count، اقرأ من الـ heading كـ fallback
-    if (total === 0) {
-      const headings = doc.querySelectorAll("h2, .f4, .text-normal");
-      for (const el of headings) {
-        const match = el.textContent?.match(/(\d[\d,]*)\s+contributions/);
-        if (match) {
-          total = parseInt(match[1].replace(/,/g, ""), 10);
-          break;
-        }
-      }
-    }
-
-    return { levels, total: total > 0 ? total : null };
+    return { levels, total };
   } catch {
     return { levels: [], total: null };
   }
 }
 
 /**
- * Trim/pad levels array to exactly WEEKS * DAYS cells.
- * GitHub returns ~374 days; we want 26 weeks × 7 days = 182 cells.
+ * GitHub بيرجع الـ data بـ row-major:
+ * [كل الأحدات، كل الاتنينات، ...، كل السبوت]
+ * الـ CSS grid محتاج column-major:
+ * [أسبوع1 كامل، أسبوع2 كامل، ...]
+ * فمحتاجين transpose.
  */
 function normaliseLevels(levels) {
   if (!levels || levels.length === 0) return null;
-  const target = WEEKS * DAYS;
-  if (levels.length >= target) return levels.slice(-target);
-  // pad front with zeros
-  return [...Array(target - levels.length).fill(0), ...levels];
+
+  // GitHub بيرجع row-major: (DAYS rows × totalWeeks cols)
+  const totalWeeks = Math.floor(levels.length / DAYS);
+  if (totalWeeks === 0) return null;
+
+  // خد آخر WEEKS أسبوع بس
+  const startWeek = Math.max(0, totalWeeks - WEEKS);
+  const usedWeeks = totalWeeks - startWeek;
+
+  // Transpose من row-major لـ column-major
+  const result = [];
+  for (let week = startWeek; week < totalWeeks; week++) {
+    for (let day = 0; day < DAYS; day++) {
+      result.push(levels[day * totalWeeks + week] ?? 0);
+    }
+  }
+
+  return result.length === usedWeeks * DAYS ? result : null;
 }
 
 export function Activity() {
@@ -121,7 +121,7 @@ export function Activity() {
           const { levels, total } = parseContributionHTML(html);
           const normalised = normaliseLevels(levels);
 
-          if (normalised && normalised.length === WEEKS * DAYS) {
+          if (normalised && normalised.length > 0) {
             setCells(normalised);
             if (total != null) setTotalContributions(total);
             setStatus("live");
@@ -132,7 +132,7 @@ export function Activity() {
         }
       }
 
-      // All proxies failed — keep fallback
+      // All proxies failed — keep fallback but show a real count if we know it
       setStatus("fallback");
     }
 
