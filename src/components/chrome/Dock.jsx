@@ -13,6 +13,16 @@ const SECTIONS = [
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
+/** Scroll helper — يستخدم Lenis لو موجود، لو لأ يـ fallback لـ scrollIntoView */
+function lenisScrollTo(target, options = {}) {
+  if (window.__lenis) {
+    window.__lenis.scrollTo(target, options);
+  } else {
+    const node = typeof target === "string" ? document.getElementById(target) : target;
+    node?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 /**
  * macOS-style floating dock with scroll-spy highlighting.
  * On project pages it degrades to a single "back to index" affordance.
@@ -27,10 +37,8 @@ export function Dock({ onOpenPalette }) {
     if (!onHome) return;
 
     const getSectionInView = () => {
-      const scrollY = window.scrollY;
       const windowH = window.innerHeight;
 
-      // اقرأ كل section وشوف أيها أكتر ظهوراً في الشاشة
       let bestId = "top";
       let bestVisibility = 0;
 
@@ -53,16 +61,14 @@ export function Dock({ onOpenPalette }) {
       setActive(bestId);
     };
 
-    // شغل مرة أول ما يتحمل
     getSectionInView();
-
     window.addEventListener("scroll", getSectionInView, { passive: true });
     return () => window.removeEventListener("scroll", getSectionInView);
   }, [onHome]);
 
   const go = (id) => {
     const node = document.getElementById(id);
-    if (node) node.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (node) lenisScrollTo(node);
   };
 
   return (
